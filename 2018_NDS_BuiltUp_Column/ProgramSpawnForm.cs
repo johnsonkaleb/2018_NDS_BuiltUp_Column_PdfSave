@@ -19,30 +19,6 @@ using System.IO;
 
 namespace _2018_NDS_BuiltUp_Column {
 
-    static class GlobalVar {
-
-        //Formatted in: Year, Month, Day
-        public static string BuildData = "2020, 9, 6";
-
-        //User defined strings for version number as selected by the coder who performs compiling
-        public static string MajorV = "1";
-        public static string MinorV = "6";
-
-        //result stores string split by Split function, temp1 acts as the delimiter that splits the string
-        static string[] temp1 = { "," };
-        static string[] result = ResultCalc(BuildData, temp1);
-
-        //Determines number of months since May 31st, 2020. Will set that date as consideration for original build date
-        public static string BuildMon = (((new DateTime(int.Parse(result[0]), int.Parse(result[1]), int.Parse(result[2])).Year - new DateTime(2020, 5, 31).Year) * 12) + new DateTime(int.Parse(result[0]), int.Parse(result[1]), int.Parse(result[2])).Month - new DateTime(2020, 5, 31).Month).ToString();
-        public static string BuildDay = new DateTime(int.Parse(result[0]), int.Parse(result[1]), int.Parse(result[2])).Date.ToString("dd");
-
-        public static string[] ResultCalc(string BuildData, string[] temp1) {
-            string[] resultcalc = BuildData.Split(temp1, StringSplitOptions.None);
-
-            return resultcalc;
-        }
-    }
-
     public partial class ProgramSpawnForm : Form {
 
         public ToolTip FormTip = new ToolTip();
@@ -708,4 +684,30 @@ namespace _2018_NDS_BuiltUp_Column {
         }
 
     }
+
+    static class GlobalVar {
+
+        //Formatted in: Year, Month, Day
+        public static string BuildData = "2020, 9, 6";
+
+        //User defined strings for version number as selected by the coder who performs compiling
+        public static string MajorV = "1";
+        public static string MinorV = "6";
+
+        //result stores string split by Split function, temp1 acts as the delimiter that splits the string
+        static string[] temp1 = { "," };
+        static string[] result = ResultCalc(BuildData, temp1);
+
+        //Determines number of months since May 31st, 2020. Will set that date as consideration for original build date
+        public static string BuildMon = (((new DateTime(int.Parse(result[0]), int.Parse(result[1]), int.Parse(result[2])).Year - new DateTime(2020, 5, 31).Year) * 12) + new DateTime(int.Parse(result[0]), int.Parse(result[1]), int.Parse(result[2])).Month - new DateTime(2020, 5, 31).Month).ToString();
+        public static string BuildDay = new DateTime(int.Parse(result[0]), int.Parse(result[1]), int.Parse(result[2])).Date.ToString("dd");
+
+        public static string[] ResultCalc(string BuildData, string[] temp1)
+        {
+            string[] resultcalc = BuildData.Split(temp1, StringSplitOptions.None);
+
+            return resultcalc;
+        }
+    }
+
 }
