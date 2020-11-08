@@ -84,113 +84,6 @@ namespace _2018_NDS_BuiltUp_Column {
         }
 
 
-        //Parses user input, converts to double
-        public double TextParse(string text, string variable) {
-            double a;
-
-            if (double.TryParse(text, out a))
-                WarningLabel_1.Text = "";
-            else {
-                WarningLabel_1.Text = ("Please enter a valid number for " + variable + ".");
-                NaNFill();
-                return -1;
-            }
-
-            return a;
-        }
-
-
-        //Returns 'NaN' to calculated boxes if user has invalid input
-        public void NaNFill() {
-            LDFStrong_Label.Text = "N/A";
-            Rb1_Label.Text = "N/A";
-            Strong_Eq15_Label.Text = "N/A";
-            LoadComboStrong_Label.Text = "N/A";
-            CompChkStrong_Label.Text = "N/A";
-            AxialLDF_Label.Text = "N/A";
-            SlenderLDF_Label.Text = "N/A";
-            SlendernessCombo_Label.Text = "N/A";
-            AxialComp_LoadCombo.Text = "N/A";
-            MomRatio_Label.Text = "N/A";
-            LatMomentLDF_Label.Text = "N/A";
-            LatMoment_LoadCombo.Text = "N/A";
-            DesignLatDeflection_Label.Text = "N/A";
-            LatDeflection_LDF.Text = "N/A";
-            LatDeflection_LoadCombo.Text = "N/A";
-        }
-
-
-        //Builds string and prints to file pathway defined by user
-        private void PrintFunction(string pathway) {
-
-            string membername = MemberName_Textbox.Text;
-            string woodspecies = WoodSpeciesListBox.Text;
-            string dimension = ProductSizeBox.Text;
-            string plies = PliesBox.Text;
-            string colheight = Col_Height.Text;
-            string compbrace = CompBrace_Textbox.Text;
-            string ecc = Ecc_Combo.Text;
-            string DL = DL_Textbox.Text;
-            string FL = FL_Textbox.Text;
-            string SL = SL_Textbox.Text;
-            string RL = RL_Textbox.Text;
-            string WL = LateralWind_Textbox.Text;
-            string ServiceCond;
-            if (No_Radio.Checked == true)
-                ServiceCond = "No";
-            else
-                ServiceCond = "Yes";
-
-            string[] dataprint = { "Built-Up Column Analysis Per 2018 National Design Specification", "", "Column Name - " + membername, "Wood Species: " + woodspecies,"Product Dimension: " + dimension, "Number of Plies: " + plies, "", "Column Height: " + colheight + " ft.", "Compression Bracing: " + compbrace + " ft.", 
-                "Applied Axial Eccentricity From Neutral Axis: " + ecc + " member depth", "", "Applied Dead Load: " + DL + " lbs", "Applied Floor Live Load: " + FL + " lbs", "Applied Snow Load: " + SL + " lbs", "Applied Roof Live Load: " + RL + " lbs", "Lateral Wind Load: " + WL + " plf", "", "Were Wet Service Conditions Considered: " + ServiceCond, 
-                "\n", "DESIGN RESULTS:\n"};
-
-            System.IO.File.WriteAllLines(pathway, dataprint);
-
-
-            for (int i = 0; i < 17; i++) {
-
-                //Adjust for slenderness
-                if (i == 0) {
-                    File.AppendAllText(pathway, datainfo_str[i] + datainfo[i].ToString("0.0") + "\n");
-                }
-                //Adjust for empty struct, lateral deflection L/xxx, and Load Combo
-                else if (i == 1 || i == 5 || i == 6 || i == 10 || i == 12 || i == 13 || i == 16) {
-                    File.AppendAllText(pathway, datainfo_str[i] + "\n");
-                }
-                //Adjust sigfig for LDF & Bending/Comp
-                else if (i == 4 || i == 9 || i == 14 || i == 15) {
-                    //Adjust to provide a passed/failed value on text report
-                    if(i == 14 && (datainfo[i] > 1))
-                        File.AppendAllText(pathway, datainfo_str[i] + datainfo[i].ToString("0.00") + " - Failed\n");
-                    else if (i == 14 && (datainfo[i] <= 1))
-                        File.AppendAllText(pathway, datainfo_str[i] + datainfo[i].ToString("0.00") + " - Passed\n");
-                    else
-                        File.AppendAllText(pathway, datainfo_str[i] + datainfo[i].ToString("0.00") + "\n");
-                }
-                //Adjust for display of lateral deflection
-                else if (i == 11) {
-                    File.AppendAllText(pathway, datainfo_str[i] + datainfo[i].ToString("0.00") + " in\n");
-                }
-                //Adjust for axial compression
-                else if (i == 2 || i == 3) {
-                    File.AppendAllText(pathway, datainfo_str[i] + datainfo[i].ToString("0") + " lbs\n");
-                }
-                //Adjust for lateral moment
-                else if (i == 7 || i == 8) {
-                    File.AppendAllText(pathway, datainfo_str[i] + datainfo[i].ToString("0") + " ft-lbs\n");
-                }
-                else {
-                    File.AppendAllText(pathway, datainfo_str[i] + datainfo[i].ToString("0") + "\n");
-                }
-            }
-
-            if (WarningLabel_1.Text != "")
-                File.AppendAllText(pathway, "\nWarning #1 - " + WarningLabel_1.Text + "\n");
-            if (WarningLabel_2.Text != "")
-                File.AppendAllText(pathway, "\nWarning #2 - " + WarningLabel_2.Text + "\n");
-        }
-
         
         //Alters tool tip when user changes value
         private void Ecc_Combo_SelectedIndexChanged(object sender, EventArgs e) {
@@ -207,6 +100,9 @@ namespace _2018_NDS_BuiltUp_Column {
 
         //Prints design information to a .txt file for user to save design data
         private void PrintButton_Click(object sender, EventArgs e) {
+
+            FormEditor FormChange = new FormEditor();
+
             SaveFileDialog saveFileDialog1 = new SaveFileDialog();
 
             DateTime today = DateTime.Today;
@@ -218,7 +114,7 @@ namespace _2018_NDS_BuiltUp_Column {
             saveFileDialog1.RestoreDirectory = true;
 
             if (saveFileDialog1.ShowDialog() == DialogResult.OK) {
-                PrintFunction(saveFileDialog1.FileName);
+                FormChange.PrintFunction(saveFileDialog1.FileName, datainfo_str, datainfo);
             }
         }
 
@@ -232,6 +128,8 @@ namespace _2018_NDS_BuiltUp_Column {
 
         //Main function
         private void CalculateButton_Click(object sender, EventArgs e) {
+
+            FormEditor FormChange = new FormEditor();
 
             //Clears data held within WarningLabel_2 if the user decides to design another member
             WarningLabel_2.Text = "";
@@ -259,7 +157,7 @@ namespace _2018_NDS_BuiltUp_Column {
             //Performs check to verify wet service conditions are allowable on the chosen wood species, exits function if use chooses incorrect wood species
             if (Yes_Radio.Checked == true && (WoodSpeciesListBox.Text == "Douglas Fir" || WoodSpeciesListBox.Text == "Spruce Pine Fir")) {
                 WarningLabel_1.Text = "This species of wood is not compatible for outdoor, wet use. Please select another wood species that is approved for exterior use.";
-                NaNFill();
+                FormChange.NaNFill();
                 return;
             }
 
@@ -267,42 +165,42 @@ namespace _2018_NDS_BuiltUp_Column {
             //Data check to ensure user selects an option in each list box, prevent program from throwing an out of range exception. Exits function if user fails to input a choice
             if (WoodSpeciesListBox.SelectedIndex == -1) {
                 WarningLabel_1.Text = "Please select an option in the wood species box.";
-                NaNFill();
+                FormChange.NaNFill();
                 return;
             }
             if (ProductSizeBox.SelectedIndex == -1) {
                 WarningLabel_1.Text = "Please select an option in the product size box.";
-                NaNFill();
+                FormChange.NaNFill();
                 return;
             }
             if (PliesBox.SelectedIndex == -1) {
                 WarningLabel_1.Text = "Please select an option for the number of plies.";
-                NaNFill();
+                FormChange.NaNFill();
                 return;
             }
 
             double Col_Hgt, DL, FL, SL, RL, Lat_WL, CompBrace, Ecc, width, depth;
 
             //Parses user input loading data, verifies as double and stores locally
-            Col_Hgt = TextParse(Col_Height.Text, "column height");
+            Col_Hgt = FormChange.TextParse(Col_Height.Text, "column height");
             if (Col_Hgt < 0)
                 return;
-            DL = TextParse(DL_Textbox.Text, "axial dead load");
+            DL = FormChange.TextParse(DL_Textbox.Text, "axial dead load");
             if (DL < 0)
                 return;
-            FL = TextParse(FL_Textbox.Text, "axial floor live load");
+            FL = FormChange.TextParse(FL_Textbox.Text, "axial floor live load");
             if (FL < 0)
                 return;
-            SL = TextParse(SL_Textbox.Text, "axial snow load");
+            SL = FormChange.TextParse(SL_Textbox.Text, "axial snow load");
             if (SL < 0)
                 return;
-            RL = TextParse(RL_Textbox.Text, "axial roof live load");
+            RL = FormChange.TextParse(RL_Textbox.Text, "axial roof live load");
             if (RL < 0)
                 return;
-            Lat_WL = TextParse(LateralWind_Textbox.Text, "lateral wind load");
+            Lat_WL = FormChange.TextParse(LateralWind_Textbox.Text, "lateral wind load");
             if (Lat_WL < 0)
                 return;
-            CompBrace = TextParse(CompBrace_Textbox.Text, "weak axis compression bracing");
+            CompBrace = FormChange.TextParse(CompBrace_Textbox.Text, "weak axis compression bracing");
             if (CompBrace < 0)
                 return;
 
@@ -688,7 +586,7 @@ namespace _2018_NDS_BuiltUp_Column {
     static class GlobalVar {
 
         //Formatted in: Year, Month, Day
-        public static string BuildData = "2020, 9, 6";
+        public static string BuildData = "2020, 11, 7";
 
         //User defined strings for version number as selected by the coder who performs compiling
         public static string MajorV = "1";

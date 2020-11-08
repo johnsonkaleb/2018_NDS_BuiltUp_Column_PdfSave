@@ -7,8 +7,8 @@
     <ProjectGuid>{BF4EB347-4440-4E81-8839-203E76FFD005}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>_2018_NDS_BuiltUp_Column</RootNamespace>
-    <AssemblyName>2018_NDS_BuiltUp_Column</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <AssemblyName>-</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
@@ -28,6 +28,7 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -75,8 +76,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Eq15_4.cs" />
+    <Compile Include="FormEditor.cs" />
     <Compile Include="MaterialProperties.cs" />
-    <Compile Include="ProgramSpawnForm.cs" />
+    <Compile Include="ProgramSpawnForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="ProgramSpawnForm.Designer.cs">
       <DependentUpon>ProgramSpawnForm.cs</DependentUpon>
     </Compile>
@@ -93,6 +97,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="2018_NDS_BuiltUp_Column_TemporaryKey.pfx" />
     <None Include="Properties\Settings.settings">

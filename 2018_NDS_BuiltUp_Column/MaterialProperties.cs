@@ -277,7 +277,7 @@ namespace _2018_NDS_BuiltUp_Column {
 
             Allow_Moment = (data.I * Fbprime) / (data.Dep / 2);
             //Convert in-lbs to ft-lbs
-            Allow_Moment = Allow_Moment / 12;
+            Allow_Moment /= 12;
 
             double Moment_Ratio = Design_Moment / Allow_Moment;
 
@@ -289,10 +289,10 @@ namespace _2018_NDS_BuiltUp_Column {
         public double Lat_Defl(MaterialProperties data, double WL, double ColHgt) {
 
             double Deflection = 5 * WL * Math.Pow(ColHgt, 4);
-            Deflection = Deflection / (384 * data.E * data.Cm_E * data.Ci_E * data.I);
+            Deflection /= (384 * data.E * data.Cm_E * data.Ci_E * data.I);
 
             //Resolve units from (Ft^3/in^2) to in. of deflection
-            Deflection = Deflection * 1728;
+            Deflection *= 1728;
 
             return Deflection;
         }
