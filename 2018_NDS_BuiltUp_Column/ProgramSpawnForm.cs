@@ -78,7 +78,6 @@ namespace _2018_NDS_BuiltUp_Column {
                 "induced moments and bending moments.\n\nAdditional analysis may be required to consider\nlateral moment due to eccentricity.");
 
 
-
             VersionLabel.Text = string.Format(VersionLabel.Text, GlobalVar.MajorV, GlobalVar.MinorV, GlobalVar.BuildMon, GlobalVar.BuildDay);
             VersionLabel.Font = new Font("Microsoft Sans Sarif", 7, FontStyle.Regular);
         }
@@ -586,7 +585,7 @@ namespace _2018_NDS_BuiltUp_Column {
     static class GlobalVar {
 
         //Formatted in: Year, Month, Day
-        public static string BuildData = "2020, 11, 7";
+        public static string BuildData = "2020, 12, 20";
 
         //User defined strings for version number as selected by the coder who performs compiling
         public static string MajorV = "1";

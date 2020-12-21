@@ -139,7 +139,7 @@ namespace _2018_NDS_BuiltUp_Column {
                 data.Fb = 575;
             }
 
-            else if (FormData.WoodSpeciesListBox.Text == "Southern Yellow Pine" && width <= 4) {
+            else if (FormData.WoodSpeciesListBox.Text == "Southern Yellow Pine" && depth <= 4) {
                 data.E = 1.4 * Math.Pow(10, 6);
                 data.Wid = width;
                 data.Dep = depth;
@@ -148,7 +148,7 @@ namespace _2018_NDS_BuiltUp_Column {
                 data.Fb = 1100;
             }
             //Per Table 4B of Supplement
-            else if (FormData.WoodSpeciesListBox.Text == "Southern Yellow Pine" && (width > 4) && (width <= 6)) {
+            else if (FormData.WoodSpeciesListBox.Text == "Southern Yellow Pine" && (depth > 4) && (depth <= 6)) {
                 data.E = 1.4 * Math.Pow(10, 6);
                 data.Wid = width;
                 data.Dep = depth;
@@ -157,7 +157,7 @@ namespace _2018_NDS_BuiltUp_Column {
                 data.Fb = 1000;
             }
             //Per Table 4B of Supplement
-            else if (FormData.WoodSpeciesListBox.Text == "Southern Yellow Pine" && (width > 6) && (width <= 8)) {
+            else if (FormData.WoodSpeciesListBox.Text == "Southern Yellow Pine" && (depth > 6) && (depth <= 8)) {
                 data.E = 1.4 * Math.Pow(10, 6);
                 data.Wid = width;
                 data.Dep = depth;
