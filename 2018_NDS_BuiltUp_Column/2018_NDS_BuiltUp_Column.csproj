@@ -7,8 +7,8 @@
     <ProjectGuid>{BF4EB347-4440-4E81-8839-203E76FFD005}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>_2018_NDS_BuiltUp_Column</RootNamespace>
-    <AssemblyName>-</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <AssemblyName>2018_NDS_BuiltUp_Column</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
@@ -50,7 +50,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>44ACAD40DF34D663E95089B66354C77F6D5FA65E</ManifestCertificateThumbprint>
@@ -61,7 +61,16 @@
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>ColumnIcon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PdfSharp, Version=1.50.5147.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp.1.50.5147\lib\net20\PdfSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="PdfSharp.Charting, Version=1.50.5147.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp.1.50.5147\lib\net20\PdfSharp.Charting.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -78,6 +87,7 @@
     <Compile Include="Eq15_4.cs" />
     <Compile Include="FormEditor.cs" />
     <Compile Include="MaterialProperties.cs" />
+    <Compile Include="Print_to_PDF.cs" />
     <Compile Include="ProgramSpawnForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -100,6 +110,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="2018_NDS_BuiltUp_Column_TemporaryKey.pfx" />
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -124,6 +135,10 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ColumnIcon.ico" />
+    <None Include="Resources\ColumnDrawing.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

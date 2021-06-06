@@ -32,9 +32,9 @@ namespace _2018_NDS_BuiltUp_Column {
         public ProgramSpawnForm() {
             InitializeComponent();
 
-            DL_Textbox.Text = "0";
-            FL_Textbox.Text = "0";
-            SL_Textbox.Text = "0";
+            DL_Textbox.Text = "2000";
+            FL_Textbox.Text = "4000";
+            SL_Textbox.Text = "8000";
             RL_Textbox.Text = "0";
             LateralWind_Textbox.Text = "0";
             LatMoment_Label.Text = "Lateral Moment\n(ft.- lbs)";
@@ -59,7 +59,7 @@ namespace _2018_NDS_BuiltUp_Column {
             //Set text in tooltips on form
             FormTip.Active = true;
             FormTip.AutoPopDelay = 15000;
-            FormTip.InitialDelay = 600;
+            FormTip.InitialDelay = 200;
             FormTip.IsBalloon = true;
 
             FormTip.SetToolTip(Ecc_Label, "Eccentricity is only applied in the depth axis of the built\nup column. No eccentricity is applied to the column width.");
@@ -76,6 +76,7 @@ namespace _2018_NDS_BuiltUp_Column {
             FormTip.SetToolTip(DesignLatDeflection_Label, "Deflection is calculated using the 0.42 wind\nload adjustment published in 2018 IBC Table\n1604.3, footnote f.");
             FormTip.SetToolTip(LatMoment_Label, "This analysis assumes eccentric loading is applied\nto the opposite face of the column as wind load,\nso we do not observe combined eccentric loading\n" +
                 "induced moments and bending moments.\n\nAdditional analysis may be required to consider\nlateral moment due to eccentricity.");
+            FormTip.SetToolTip(LatDeflection_LoadCombo, "This calculation assumes deflection is only induced\nfrom lateral loads. No contribution to deflection\nhas been implemented due to axial loads.");
 
 
             VersionLabel.Text = string.Format(VersionLabel.Text, GlobalVar.MajorV, GlobalVar.MinorV, GlobalVar.BuildMon, GlobalVar.BuildDay);
@@ -99,22 +100,9 @@ namespace _2018_NDS_BuiltUp_Column {
 
         //Prints design information to a .txt file for user to save design data
         private void PrintButton_Click(object sender, EventArgs e) {
+            Print_to_PDF PdfClass = new Print_to_PDF();
+            PdfClass.PDFPrintMethod();
 
-            FormEditor FormChange = new FormEditor();
-
-            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
-
-            DateTime today = DateTime.Today;
-
-            saveFileDialog1.DefaultExt = "*.txt";
-            saveFileDialog1.FileName = "Built-Up Column Design_" + today.ToString("MM.dd.yyyy") + ".txt";
-            saveFileDialog1.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
-            saveFileDialog1.FilterIndex = 2;
-            saveFileDialog1.RestoreDirectory = true;
-
-            if (saveFileDialog1.ShowDialog() == DialogResult.OK) {
-                FormChange.PrintFunction(saveFileDialog1.FileName, datainfo_str, datainfo);
-            }
         }
 
 
@@ -132,26 +120,6 @@ namespace _2018_NDS_BuiltUp_Column {
 
             //Clears data held within WarningLabel_2 if the user decides to design another member
             WarningLabel_2.Text = "";
-
-            //clears data in dataprint string in case user designs more than one member
-            datainfo_str[0] = "Critical Slenderness: ";
-            datainfo_str[1] = "";
-            datainfo_str[2] = "Design Axial Compression: ";
-            datainfo_str[3] = "Allowed Axial Compression: ";
-            datainfo_str[4] = "Compression Load Duration Factor: ";
-            datainfo_str[5] = "Axial Compression Critical Load Combination: ";
-            datainfo_str[6] = "";
-            datainfo_str[7] = "Design Lateral Moment: ";
-            datainfo_str[8] = "Allowable Lateral Moment: ";
-            datainfo_str[9] = "Lateral Moment Load Duration Factor: ";
-            datainfo_str[10] = "Lateral Moment Critical Load Combination: ";
-            datainfo_str[11] = "Design Lateral Deflection: ";
-            datainfo_str[12] = "Lateral Deflection Performance: ";
-            datainfo_str[13] = "";
-            datainfo_str[14] = "Bending/Compression: ";
-            datainfo_str[15] = "Bending/Compression Load Duration Factor: ";
-            datainfo_str[16] = "Bending/Compression Critical Load Combination: ";
-
 
             //Performs check to verify wet service conditions are allowable on the chosen wood species, exits function if use chooses incorrect wood species
             if (Yes_Radio.Checked == true && (WoodSpeciesListBox.Text == "Douglas Fir" || WoodSpeciesListBox.Text == "Spruce Pine Fir")) {
@@ -273,6 +241,14 @@ namespace _2018_NDS_BuiltUp_Column {
 
             //Calcs lateral deflection due to wind loading, adjust wind load based on IBC Table 1604.3, footnote f
             Lat_Def = StudData.Lat_Defl(StudData, 0.42 * Lat_WL, Col_Hgt);
+            string Lat_Def_LC;
+            if (Lat_WL == 0) {
+                Lat_Def_LC = "N/A";
+            }
+            else {
+                Lat_Def_LC = "1.0 DL + 0.42 W";
+            }
+
 
             //IBC Load Combo 16-8
             double Strong_15_4 = eq15_4.BendingCheckStrong(StudData, DL, 0 * FL, 0 * SL, 0 * RL, 0 * Lat_WL, Col_Hgt, Ecc, Le1, Le2, CompBrace, out LDF, out Fbprime, out Fcprime, out CompChk);
@@ -555,7 +531,7 @@ namespace _2018_NDS_BuiltUp_Column {
 
             SlenderLDF_Label.Text = "N/A";
             SlendernessCombo_Label.Text = "N/A";
-            LatDeflection_LoadCombo.Text = "N/A";
+            LatDeflection_LoadCombo.Text = Lat_Def_LC;
 
             //Fill in datainfo struct to allow user to print to text file
             datainfo[0] = Rb1;

@@ -59,5 +59,15 @@ namespace _2018_NDS_BuiltUp_Column.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ColumnDrawing {
+            get {
+                object obj = ResourceManager.GetObject("ColumnDrawing", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

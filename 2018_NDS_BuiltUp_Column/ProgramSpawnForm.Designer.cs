@@ -23,6 +23,7 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent() {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProgramSpawnForm));
             this.ExitButton = new System.Windows.Forms.Button();
             this.CalculateButton = new System.Windows.Forms.Button();
             this.WoodSpeciesListBox = new System.Windows.Forms.ListBox();
@@ -35,7 +36,6 @@
             this.PliesBox = new System.Windows.Forms.ListBox();
             this.WL_Label = new System.Windows.Forms.Label();
             this.Ecc_Label = new System.Windows.Forms.Label();
-            this.DL_Textbox = new System.Windows.Forms.TextBox();
             this.Ecc_Combo = new System.Windows.Forms.ComboBox();
             this.WarningLabel_1 = new System.Windows.Forms.Label();
             this.FL_Textbox = new System.Windows.Forms.TextBox();
@@ -81,6 +81,7 @@
             this.DesignLatDeflection_Label = new System.Windows.Forms.Label();
             this.LatDeflection_LDF = new System.Windows.Forms.Label();
             this.VersionLabel = new System.Windows.Forms.Label();
+            this.DL_Textbox = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -213,14 +214,6 @@
             this.Ecc_Label.Text = "Eccentricity";
             this.Ecc_Label.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // DL_Textbox
-            // 
-            this.DL_Textbox.Location = new System.Drawing.Point(129, 122);
-            this.DL_Textbox.Name = "DL_Textbox";
-            this.DL_Textbox.Size = new System.Drawing.Size(100, 20);
-            this.DL_Textbox.TabIndex = 8;
-            this.DL_Textbox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
             // Ecc_Combo
             // 
             this.Ecc_Combo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -274,6 +267,7 @@
             this.Col_Height.Name = "Col_Height";
             this.Col_Height.Size = new System.Drawing.Size(69, 20);
             this.Col_Height.TabIndex = 5;
+            this.Col_Height.Text = "15";
             this.Col_Height.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // CompBrace_Label
@@ -489,6 +483,7 @@
             this.MemberName_Textbox.Name = "MemberName_Textbox";
             this.MemberName_Textbox.Size = new System.Drawing.Size(69, 20);
             this.MemberName_Textbox.TabIndex = 4;
+            this.MemberName_Textbox.Text = "Tester 1";
             this.MemberName_Textbox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // MemberName_Label
@@ -580,7 +575,7 @@
             this.LatDeflection_Label.Name = "LatDeflection_Label";
             this.LatDeflection_Label.Size = new System.Drawing.Size(119, 26);
             this.LatDeflection_Label.TabIndex = 61;
-            this.LatDeflection_Label.Text = "Lateral Deflection (in.)";
+            this.LatDeflection_Label.Text = "Lateral Deflection";
             this.LatDeflection_Label.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // LatDeflection_LoadCombo
@@ -615,6 +610,14 @@
             this.VersionLabel.Size = new System.Drawing.Size(113, 13);
             this.VersionLabel.TabIndex = 62;
             this.VersionLabel.Text = "Version: {0}.{1}.{2}.{3}";
+            // 
+            // DL_Textbox
+            // 
+            this.DL_Textbox.Location = new System.Drawing.Point(129, 122);
+            this.DL_Textbox.Name = "DL_Textbox";
+            this.DL_Textbox.Size = new System.Drawing.Size(100, 20);
+            this.DL_Textbox.TabIndex = 8;
+            this.DL_Textbox.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // ProgramSpawnForm
             // 
@@ -677,6 +680,7 @@
             this.Controls.Add(this.WoodSpeciesListBox);
             this.Controls.Add(this.CalculateButton);
             this.Controls.Add(this.ExitButton);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ProgramSpawnForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "NDS 2018 Built-Up Column With Lateral Load";
@@ -719,10 +723,8 @@
         public System.Windows.Forms.RadioButton Yes_Radio;
         public System.Windows.Forms.TextBox CompBrace_Textbox;
         public System.Windows.Forms.Label WarningLabel_2;
-        private System.Windows.Forms.Label VersionLabel;
         public System.Windows.Forms.ListBox ProductSizeBox;
         public System.Windows.Forms.ListBox PliesBox;
-        public System.Windows.Forms.TextBox DL_Textbox;
         public System.Windows.Forms.ComboBox Ecc_Combo;
         public System.Windows.Forms.TextBox FL_Textbox;
         public System.Windows.Forms.TextBox SL_Textbox;
@@ -747,6 +749,8 @@
         public System.Windows.Forms.Label LatDeflection_LDF;
         public System.Windows.Forms.Label WarningLabel_1;
         public System.Windows.Forms.RadioButton No_Radio;
+        public System.Windows.Forms.Label VersionLabel;
+        public System.Windows.Forms.TextBox DL_Textbox;
     }
 }
 
